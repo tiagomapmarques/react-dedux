@@ -1,7 +1,8 @@
 import { createStore as reduxCreateStore, combineReducers, applyMiddleware, Middleware } from 'redux';
 import * as thunk from 'redux-thunk';
 
-import { StateChangerGroupList, Store } from './types';
+import { reducer } from './reducer';
+import { StateChangerGroupList, StateChangerGroupListReduced, Store, Configuration, StateDefaultValues } from './types';
 
 declare var window: any;
 
@@ -10,9 +11,15 @@ if (window && window.devToolsExtension && typeof window.devToolsExtension === 'f
   middleware = [ ...middleware, <Middleware>(window.devToolsExtension()) ];
 }
 
-export const createStore = <S>(reducersObject: StateChangerGroupList) =>
+const autoReduce = (reducersObject: StateChangerGroupList, defaultValues: StateDefaultValues, config: Configuration): StateChangerGroupListReduced =>
+  Object.keys(reducersObject).reduce((accumulator, key) => ({
+    ...accumulator,
+    [key]: reducer(key, defaultValues[key], reducersObject[key], config),
+  }), {});
+
+export const createStore = <S>(reducersObject: StateChangerGroupList, defaultValues: StateDefaultValues, config: Configuration) =>
   (initialState?: S): Store<S> => reduxCreateStore(
-    combineReducers(reducersObject),
+    combineReducers(autoReduce(reducersObject, defaultValues, config)),
     initialState,
     applyMiddleware(...middleware)
   );

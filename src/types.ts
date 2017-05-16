@@ -46,9 +46,13 @@ export interface StateChangerGroup<S> {
   [key: string]: StateChanger<S>;
 }
 
+export interface StateChangerGroupList {
+  [key: string]: StateChangerGroup<any>;
+}
+
 export type StateChangerReduced<S> = StateChanger<S>;
 
-export interface StateChangerGroupList {
+export interface StateChangerGroupListReduced {
   [key: string]: StateChangerReduced<any>;
 }
 
@@ -58,6 +62,10 @@ export interface StateDomain<S> {
 
 export interface StateValues {
   [key: string]: StateDomain<any> | any;
+}
+
+export interface StateDefaultValues {
+  [key: string]: any;
 }
 
 export type DispatchedFunction = (...args: any[]) => void;

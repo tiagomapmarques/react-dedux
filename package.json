@@ -1,6 +1,6 @@
 {
   "name": "react-dedux",
-  "version": "0.2.0-beta.2",
+  "version": "0.3.0-beta.3",
   "description": "Redux abstraction for state management in React",
   "main": "./lib/index.js",
   "scripts": {

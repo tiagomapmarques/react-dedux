@@ -43,13 +43,14 @@ export interface ActionGroupDispatchedList {
 }
 
 export type StateChanger<S> = (previousState: S, action: ActionObject) => S;
+export type StateChangerReduced<S> = StateChanger<S>;
 
 export interface StateChangerGroup<S> {
   [key: string]: StateChanger<S>;
 }
 
-export interface StateChangerGroupList {
-  [key: string]: StateChangerGroup<any>;
+export interface StateChangerGroupReduced {
+  [key: string]: StateChangerReduced<any>;
 }
 
 export interface StateChangerGroupWithDefaults<S> {
@@ -59,12 +60,6 @@ export interface StateChangerGroupWithDefaults<S> {
 
 export interface StateChangerGroupWithDefaultsList {
   [key: string]: StateChangerGroupWithDefaults<any>;
-}
-
-export type StateChangerReduced<S> = StateChanger<S>;
-
-export interface StateChangerGroupListReduced {
-  [key: string]: StateChangerReduced<any>;
 }
 
 export interface StateDomain<S> {

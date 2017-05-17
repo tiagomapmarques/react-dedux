@@ -3,11 +3,10 @@ import {
   ActionGroup, ActionGroupList,
   ActionGroupDispatched, ActionGroupDispatchedList,
 } from './types';
-import { getConfig } from './config';
 
 const strip = (str: string, config: Configuration): string => {
-  const prefix = config.ACTIONS_PREFIX || getConfig().ACTIONS_PREFIX;
-  const suffix = config.ACTIONS_SUFFIX || getConfig().ACTIONS_SUFFIX;
+  const prefix = config.ACTIONS_PREFIX;
+  const suffix = config.ACTIONS_SUFFIX;
   let result = str;
 
   if (result.indexOf(prefix) === 0) {
@@ -35,7 +34,7 @@ export const actionsSelector = (actions: ActionGroupList, config: Configuration)
         ...accumulator,
         [key]: actionsToDispatchables(actions[key], dispatch),
       }), {});
-    const init = config.INIT_FUNCTION || getConfig().INIT_FUNCTION;
+    const init = config.INIT_FUNCTION;
     Object.keys(selected).forEach(item => {
       selected[item][init] && typeof selected[item][init] === 'function' && selected[item][init]();
     });

@@ -3,7 +3,7 @@ import * as thunk from 'redux-thunk';
 
 import { getConfig } from './config';
 import { reducer } from './reducer';
-import { StateChangerGroupWithDefaultsList, StateChangerGroupListReduced, Store, Configuration, AnyConfiguration } from './types';
+import { StateChangerGroupWithDefaultsList, StateChangerGroupReduced, Store, Configuration, AnyConfiguration } from './types';
 
 declare var window: any;
 
@@ -12,7 +12,7 @@ if (window && window.devToolsExtension && typeof window.devToolsExtension === 'f
   middleware = [ ...middleware, <Middleware>(window.devToolsExtension()) ];
 }
 
-const autoReduce = (stateChangers: StateChangerGroupWithDefaultsList, config: Configuration): StateChangerGroupListReduced =>
+const autoReduce = (stateChangers: StateChangerGroupWithDefaultsList, config: Configuration): StateChangerGroupReduced =>
   Object.keys(stateChangers).reduce((accumulator, key) => ({
     ...accumulator,
     [key]: reducer(key, stateChangers[key].defaultValue, stateChangers[key].stateChangers, config),

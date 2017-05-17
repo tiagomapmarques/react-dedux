@@ -1,4 +1,5 @@
 import { Configuration, AnyConfiguration } from './types';
+import { capitalise } from './capitalise';
 
 const config: Configuration = {
   ACTIONS_PREFIX: '',
@@ -11,7 +12,10 @@ const config: Configuration = {
 
 const buildHelpers = (newConfig: Configuration): Configuration => ({
   ...newConfig,
-  getActionsName: (name: string) => `${newConfig.ACTIONS_PREFIX}${name}${newConfig.ACTIONS_SUFFIX}`,
+  getActionsName: (name: string) => {
+    const prefixed = (newConfig.ACTIONS_PREFIX && `${newConfig.ACTIONS_PREFIX}${capitalise(name)}`) || `${name}`;
+    return `${prefixed}${newConfig.ACTIONS_SUFFIX || config.ACTIONS_SUFFIX}`;
+  },
   getActionType: (typeName: string, typeAction: string) => ({
     type: `${typeName}${newConfig.SPLITTER}${typeAction}`,
   }),

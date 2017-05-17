@@ -1,6 +1,5 @@
-// import { Reducer } from 'redux';
-import { Configuration, ActionObject, StateChangerGroup, StateChangerReduced } from './types';
 import { getConfig } from './config';
+import { Configuration, ActionObject, StateChangerGroup, StateChangerReduced } from './types';
 
 export const reducer = <S>(typeName: string, defaultValue: any, stateChangers: StateChangerGroup<S>, config: Configuration): StateChangerReduced<S> =>
   (prevState: S, action: ActionObject): S => {

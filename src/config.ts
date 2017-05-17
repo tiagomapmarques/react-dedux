@@ -1,4 +1,4 @@
-import { Configuration, FlexibleConfiguration } from './types';
+import { Configuration, AnyConfiguration } from './types';
 
 const config: Configuration = {
   ACTIONS_PREFIX: '',
@@ -17,4 +17,5 @@ const buildHelpers = (newConfig: Configuration): Configuration => ({
   }),
 });
 
-export const getConfig = (newConfig?: FlexibleConfiguration) => buildHelpers({ ...config, ...newConfig });
+export const getConfig = (newConfig?: AnyConfiguration) =>
+  buildHelpers({ ...config, ...newConfig });

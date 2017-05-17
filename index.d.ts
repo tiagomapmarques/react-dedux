@@ -16,6 +16,8 @@ export interface FlexibleConfiguration {
   INIT_FUNCTION?: string;
 }
 
+export type AnyConfiguration = Configuration|FlexibleConfiguration;
+
 export interface ActionObject {
   type: string;
   [key: string]: any;
@@ -50,6 +52,15 @@ export interface StateChangerGroupList {
   [key: string]: StateChangerGroup<any>;
 }
 
+export interface StateChangerGroupWithDefaults<S> {
+  stateChangers: StateChangerGroup<S>;
+  defaultValue: S;
+}
+
+export interface StateChangerGroupWithDefaultsList {
+  [key: string]: StateChangerGroupWithDefaults<any>;
+}
+
 export type StateChangerReduced<S> = StateChanger<S>;
 
 export interface StateChangerGroupListReduced {
@@ -77,7 +88,6 @@ export type Store<S> = ReactRedux.Store<S>;
 export type Connector = (..._: string[]) => ReactRedux.ComponentDecorator<{}, any>;
 export type StoreCreator = <S extends StateValues>(_?: StateValues) => Store<S>;
 
-export declare function connect(actions: ActionGroupList, config: Configuration): Connector;
-export declare function createStore<S>(reducersObject: StateChangerGroupList): Store<S>;
-export declare function reducer<S>(typeName: string, stateChangers: StateChangerGroup<S>, config: Configuration): StateChangerReduced<S>
-export declare function getConfig(newConfig?: FlexibleConfiguration): Configuration;
+export declare function createStore<S>(stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration): Store<S>;
+export declare function connect(actions: ActionGroupList, config?: AnyConfiguration): Connector;
+export declare function getConfig(newConfig?: AnyConfiguration): Configuration;

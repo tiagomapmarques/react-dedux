@@ -84,7 +84,6 @@ export type Connector = (..._: string[]) => ReactRedux.ComponentDecorator<{}, an
 export type StoreCreator = <S extends StateValues>(_?: StateValues) => Store<S>;
 
 export declare function createStore<S>(stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration): Store<S>;
-export declare function createStoreDefault<S>(reducer: StateChangerReduced<any>, initialState: S): Store<S>;
 export declare function replaceStateChangers<S>(store: Store<S>, stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration): void;
 export declare function connect(actions: ActionGroupList, config?: AnyConfiguration): Connector;
 export declare function getConfig(newConfig?: AnyConfiguration): Configuration;

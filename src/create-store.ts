@@ -7,9 +7,9 @@ import { StateChangerGroupWithDefaultsList, Store, AnyConfiguration } from './ty
 
 declare var window: any;
 
-let middleware: any[] = [ thunk.default ];
+let middleware: Middleware[] = [ thunk.default ];
 if (window && window.devToolsExtension && typeof window.devToolsExtension === 'function') {
-  middleware = [ ...middleware, <Middleware>(window.devToolsExtension()) ];
+  middleware = [ ...middleware, window.devToolsExtension() ];
 }
 
 export const createStore = <S>(stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration) =>

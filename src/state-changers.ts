@@ -1,12 +1,20 @@
 import { combineReducers } from './combine-reducers';
 
 import { getConfig } from './config';
-import { Store, StateChangerGroupReduced, StateChangerGroupWithDefaultsList, AnyConfiguration } from './types';
+import { Store, StateChangerGroupReduced, StateChangerGroupWithDefaultsList, Configuration, AnyConfiguration } from './types';
 
-export const stateChangersSelector = (...args: string[]) => (stateChangers: StateChangerGroupReduced): StateChangerGroupReduced =>
-  Object.keys(stateChangers)
-    .filter(key => args.indexOf(key) >= 0)
-    .reduce((accumulator, key) => ({ ...accumulator, [key]: stateChangers[key] }), {});
+export const stateChangersSelector = (config: Configuration) => (...args: string[]) =>
+  (stateChangers: StateChangerGroupReduced): StateChangerGroupReduced => {
+
+    let stateChangersNoDomain: StateChangerGroupReduced = stateChangers;
+    config.getDomainNames().forEach(domain => {
+      stateChangersNoDomain = (<any>stateChangersNoDomain)[domain];
+    });
+
+    return Object.keys(stateChangersNoDomain)
+      .filter(key => args.indexOf(key) >= 0)
+      .reduce((accumulator, key) => ({ ...accumulator, [key]: stateChangersNoDomain[key] }), {});
+  }
 
 export const replaceStateChangers = <S>(store: Store<S>, stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration) =>
-  store.replaceReducer(<any>combineReducers(stateChangers, getConfig(config)))
+  store.replaceReducer(combineReducers(stateChangers, getConfig(config)))

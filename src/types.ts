@@ -1,15 +1,18 @@
 import * as ReactRedux from 'react-redux';
 
 export interface Configuration {
+  DOMAIN: string;
   ACTIONS_PREFIX: string;
   ACTIONS_SUFFIX: string;
   SPLITTER: string;
   INIT_FUNCTION: string;
   getActionsName: (name: string) => string;
   getActionType: (typeName: string, typeAction: string) => ActionObject;
+  getDomainNames: () => string[];
 }
 
 export interface FlexibleConfiguration {
+  DOMAIN?: string;
   ACTIONS_PREFIX?: string;
   ACTIONS_SUFFIX?: string;
   SPLITTER?: string;

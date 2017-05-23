@@ -19,11 +19,20 @@ const reducer = <S>(typeName: string, defaultValue: any, stateChangers: StateCha
     return prevState || defaultValue;
   };
 
-const autoReduce = (stateChangers: StateChangerGroupWithDefaultsList, config: Configuration): StateChangerGroupReduced =>
-  Object.keys(stateChangers).reduce((accumulator, key) => ({
+export const combineReducers = (stateChangers: StateChangerGroupWithDefaultsList, config: Configuration): StateChangerReduced<any> => {
+
+  const reducers =  Object.keys(stateChangers).reduce((accumulator, key) => ({
     ...accumulator,
     [key]: reducer(key, stateChangers[key].defaultValue, stateChangers[key].stateChangers, config),
   }), {});
 
-export const combineReducers = (stateChangers: StateChangerGroupWithDefaultsList, config: Configuration) =>
-  reduxCombineReducers(autoReduce(stateChangers, config));
+  const domainNames = config.getDomainNames().reverse();
+  let reducerObject: StateChangerGroupReduced = reducers;
+
+  domainNames.forEach(domain => {
+    reducerObject = {
+      [domain]: reduxCombineReducers(reducerObject),
+    };
+  });
+  return reduxCombineReducers(reducerObject);
+}

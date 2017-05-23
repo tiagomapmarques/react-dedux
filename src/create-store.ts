@@ -1,9 +1,9 @@
-import { createStore as reduxCreateStore, combineReducers, applyMiddleware, Middleware } from 'redux';
+import { createStore as reduxCreateStore, applyMiddleware, Middleware } from 'redux';
 import * as thunk from 'redux-thunk';
 
 import { getConfig } from './config';
-import { reducer } from './reducer';
-import { StateChangerGroupWithDefaultsList, StateChangerGroupReduced, Store, Configuration, AnyConfiguration } from './types';
+import { combineReducers } from './combine-reducers';
+import { StateChangerGroupWithDefaultsList, Store, AnyConfiguration } from './types';
 
 declare var window: any;
 
@@ -12,15 +12,9 @@ if (window && window.devToolsExtension && typeof window.devToolsExtension === 'f
   middleware = [ ...middleware, <Middleware>(window.devToolsExtension()) ];
 }
 
-const autoReduce = (stateChangers: StateChangerGroupWithDefaultsList, config: Configuration): StateChangerGroupReduced =>
-  Object.keys(stateChangers).reduce((accumulator, key) => ({
-    ...accumulator,
-    [key]: reducer(key, stateChangers[key].defaultValue, stateChangers[key].stateChangers, config),
-  }), {});
-
 export const createStore = <S>(stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration) =>
   (initialState?: S): Store<S> => reduxCreateStore(
-    combineReducers(autoReduce(stateChangers, getConfig(config))),
+    combineReducers(stateChangers, getConfig(config)),
     initialState,
     applyMiddleware(...middleware)
   );

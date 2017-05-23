@@ -9,7 +9,7 @@ export const connect = (actions: ActionGroupList, config?: AnyConfiguration): Co
   (...args: string[]) => {
     const configuration = getConfig(config);
     return Redux.connect(
-      stateChangersSelector(...args),
+      stateChangersSelector(configuration)(...args),
       actionsSelector(
         Object.keys(actions).reduce((accumulator: ActionGroupList, key) => ({
           ...accumulator,

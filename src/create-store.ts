@@ -12,10 +12,8 @@ if (window && window.devToolsExtension && typeof window.devToolsExtension === 'f
   middleware = [ ...middleware, <Middleware>(window.devToolsExtension()) ];
 }
 
-export const createStoreDefault = reduxCreateStore;
-
 export const createStore = <S>(stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration) =>
-  (initialState?: S): Store<S> => createStoreDefault(
+  (initialState?: S): Store<S> => reduxCreateStore(
     combineReducers(stateChangers, getConfig(config)),
     initialState,
     applyMiddleware(...middleware)

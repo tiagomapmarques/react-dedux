@@ -8,6 +8,5 @@ export const stateChangersSelector = (...args: string[]) => (stateChangers: Stat
     .filter(key => args.indexOf(key) >= 0)
     .reduce((accumulator, key) => ({ ...accumulator, [key]: stateChangers[key] }), {});
 
-
 export const replaceStateChangers = <S>(store: Store<S>, stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration) =>
   store.replaceReducer(<any>combineReducers(stateChangers, getConfig(config)))

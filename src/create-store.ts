@@ -2,7 +2,7 @@ import { createStore as reduxCreateStore, applyMiddleware, Middleware } from 're
 import * as thunk from 'redux-thunk';
 
 import { getConfig } from './config';
-import { combineReducers } from './reducer';
+import { combineReducers } from './combine-reducers';
 import { StateChangerGroupWithDefaultsList, Store, AnyConfiguration } from './types';
 
 declare var window: any;

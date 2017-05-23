@@ -1,4 +1,4 @@
-import { combineReducers } from './reducer';
+import { combineReducers } from './combine-reducers';
 
 import { getConfig } from './config';
 import { Store, StateChangerGroupReduced, StateChangerGroupWithDefaultsList, AnyConfiguration } from './types';

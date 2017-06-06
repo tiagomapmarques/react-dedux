@@ -6,6 +6,7 @@ export interface Configuration {
   ACTIONS_SUFFIX: string;
   SPLITTER: string;
   INIT_FUNCTION: string;
+  getSplitter: () => string,
   getActionsName: (name: string) => string;
   getActionType: (typeName: string, typeAction: string) => ActionObject;
   getDomainNames: () => string[];
@@ -58,7 +59,7 @@ export interface StateChangerGroupReduced {
 
 export interface StateChangerGroupWithDefaults<S> {
   stateChangers: StateChangerGroup<S>;
-  defaultValue: S;
+  defaultValue: S|null;
 }
 
 export interface StateChangerGroupWithDefaultsList {

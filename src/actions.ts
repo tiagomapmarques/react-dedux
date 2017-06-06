@@ -3,21 +3,24 @@ import {
   ActionGroup, ActionGroupList,
   ActionGroupDispatched, ActionGroupDispatchedList,
 } from './types';
+import { getConfig, getPrefixAndSuffix } from './config';
 
 const strip = (str: string, config: Configuration): string => {
-  const prefix = config.ACTIONS_PREFIX;
-  const suffix = config.ACTIONS_SUFFIX;
+  const preAndSuffix = getPrefixAndSuffix(
+    config.ACTIONS_PREFIX, getConfig().ACTIONS_PREFIX,
+    config.ACTIONS_SUFFIX, getConfig().ACTIONS_SUFFIX
+  );
   let result = str;
 
-  if (result.indexOf(prefix) === 0) {
-    result = result.substring(prefix.length);
+  if (result.indexOf(`${preAndSuffix.ACTIONS_PREFIX || ''}`) === 0) {
+    result = result.substring(`${preAndSuffix.ACTIONS_PREFIX || ''}`.length);
   }
 
-  const lengthWithoutSuffix = result.length - suffix.length;
-  if (result.indexOf(suffix) === lengthWithoutSuffix) {
+  const lengthWithoutSuffix = result.length - `${preAndSuffix.ACTIONS_SUFFIX || ''}`.length;
+  if (result.indexOf(`${preAndSuffix.ACTIONS_SUFFIX || ''}`) === lengthWithoutSuffix) {
     result = result.substring(0, lengthWithoutSuffix);
   }
-  return result;
+  return result.toLowerCase();
 };
 
 const actionsToDispatchables = (actionsGroup: ActionGroup, dispatch: DispatchFunction): ActionGroupDispatched =>
@@ -28,8 +31,9 @@ const actionsToDispatchables = (actionsGroup: ActionGroup, dispatch: DispatchFun
 
 export const actionsSelector = (actions: ActionGroupList, config: Configuration) => (...args: string[]) =>
   (dispatch: DispatchFunction) => {
+    const argsLower = args.map(arg => arg.toLowerCase());
     const selected: ActionGroupDispatchedList = Object.keys(actions)
-      .filter(key => args.indexOf(strip(key, config)) >= 0)
+      .filter(key => argsLower.indexOf(strip(key, config)) >= 0)
       .reduce((accumulator, key) => ({
         ...accumulator,
         [key]: actionsToDispatchables(actions[key], dispatch),

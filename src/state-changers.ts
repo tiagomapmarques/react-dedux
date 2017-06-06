@@ -11,8 +11,9 @@ export const stateChangersSelector = (config: Configuration) => (...args: string
       stateChangersNoDomain = (<any>stateChangersNoDomain)[domain];
     });
 
+    const argsLower = args.map(arg => arg.toLowerCase());
     return Object.keys(stateChangersNoDomain)
-      .filter(key => args.indexOf(key) >= 0)
+      .filter(key => argsLower.indexOf(key.toLowerCase()) >= 0)
       .reduce((accumulator, key) => ({ ...accumulator, [key]: stateChangersNoDomain[key] }), {});
   }
 

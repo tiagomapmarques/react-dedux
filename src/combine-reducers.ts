@@ -11,8 +11,7 @@ import {
 
 const reducer = <S>(typeName: string, defaultValue: any, stateChangers: StateChangerGroup<S>, config: Configuration): StateChangerReduced<S> =>
   (prevState: S, action: ActionObject): S => {
-    const splitter = config.SPLITTER;
-    const actionType = action.type.split(splitter);
+    const actionType = action.type.split(config.getSplitter());
     if (actionType.length === 2 && actionType[0].toLowerCase() === typeName.toLowerCase()) {
       return stateChangers[actionType[1]](prevState, action);
     }

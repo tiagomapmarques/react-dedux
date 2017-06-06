@@ -84,10 +84,7 @@ export type GetStateFunction = () => StateDomain<any>;
 
 export type Store<S> = ReactRedux.Store<S>;
 
-export type Connector = (..._: string[]) => ReactRedux.ComponentDecorator<{}, any>;
-export type StoreCreator = <S extends StateValues>(_?: StateValues) => Store<S>;
-
 export declare function createStore<S>(stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration): Store<S>;
 export declare function replaceStateChangers<S>(store: Store<S>, stateChangers: StateChangerGroupWithDefaultsList, config?: AnyConfiguration): void;
-export declare function connect(actions: ActionGroupList, config?: AnyConfiguration): Connector;
+export declare function connect(actions: ActionGroupList, config?: AnyConfiguration): <P extends ActionGroupList>(..._: string[]) => ReactRedux.ComponentDecorator<P>;
 export declare function getConfig(newConfig?: AnyConfiguration): Configuration;

@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "jest --config jest.unit.config.json",
+    "test:unit:watch": "jest --config jest.unit.config.json --watch",
+    "test:e2e": "jest --config jest.e2e.config.json",
+    "test:e2e:watch": "jest --config jest.e2e.config.json --watch"
+  },
+  "dependencies": {
+    "@types/react-redux": "~5.0.0 || 4.4.40",
+    "react": "^15.0.0",
+    "react-redux": "~5.0.0",
+    "redux": "~3.6.0",
+    "redux-thunk": "~2.2.0"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^2.8.0",
+    "@types/jest": "^19.2.3",
+    "enzyme": "^2.8.2",
+    "jasmine": "^2.6.0",
+    "jest": "^20.0.3",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "~15.4.0",
+    "ts-jest": "^20.0.4",
+    "typescript": "~2.3.0"
+  }
+}

@@ -1,5 +1,5 @@
 import { Configuration, AnyConfiguration, FlexibleConfiguration } from './types';
-import { capitalise } from './capitalise';
+import * as capitalise from 'capitalize';
 
 const config: Configuration = {
   DOMAIN: '',
